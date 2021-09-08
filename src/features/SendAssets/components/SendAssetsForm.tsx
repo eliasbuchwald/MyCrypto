@@ -495,7 +495,7 @@ export const SendAssetsForm = ({ txConfig, onComplete, protectTxButton }: ISendF
     ? getBaseAssetByNetwork({ network, assets })!
     : getBaseAssetByNetwork({ network: defaultNetwork!, assets })!;
 
-  const isEIP1559 = isEIP1559Supported(network, values.account);
+  const isEIP1559 = isEIP1559Supported(network);
 
   const gasPrice = isEIP1559
     ? values.maxFeePerGasField.toString()
@@ -525,7 +525,7 @@ export const SendAssetsForm = ({ txConfig, onComplete, protectTxButton }: ISendF
   const handleGasPriceEstimation = async (network = values.network) => {
     try {
       setIsEstimatingGasPrice(true);
-      if (!isEIP1559Supported(network, values.account)) {
+      if (!isEIP1559Supported(network)) {
         const data = await fetchGasPriceEstimates(network);
         setFieldValue('gasEstimates', data);
         setFieldValue('gasPriceSlider', data.fast.toString());
